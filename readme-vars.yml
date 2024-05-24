@@ -90,5 +90,6 @@ app_setup_block: |
 
 # changelog
 changelogs:
+  - { date: "23.05.24:", desc: "Rebase to Alpine 3.20." }
   - { date: "10.02.24:", desc: "Rebase to Alpine 3.19, update Readme with new env vars, and ingest proper PWA icon." }
   - { date: "07.12.23:", desc: "Initial Release." }
