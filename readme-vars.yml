@@ -6,6 +6,7 @@ project_url: "https://krita.org/en/"
 project_logo: "https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/krita-logo.png"
 project_blurb: "[Krita]({{ project_url }}) is a professional FREE and open source painting program. It is made by artists that want to see affordable art tools for everyone."
 project_lsio_github_repo_url: "https://github.com/linuxserver/docker-{{ project_name }}"
+project_categories: "Image Editor"
 project_blurb_optional_extras_enabled: false
 # supported architectures
 available_architectures:
