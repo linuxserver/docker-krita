@@ -1,1 +1,1 @@
-krita
+PYTHONHOME=/opt/krita/usr krita
