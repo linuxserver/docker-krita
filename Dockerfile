@@ -1,4 +1,4 @@
-FROM ghcr.io/linuxserver/baseimage-kasmvnc:alpine321
+FROM ghcr.io/linuxserver/baseimage-selkies:debianbookworm
 
 # set version label
 ARG BUILD_DATE
@@ -8,20 +8,28 @@ LABEL build_version="Linuxserver.io version:- ${VERSION} Build-date:- ${BUILD_DA
 LABEL maintainer="thelamer"
 
 # title
-ENV TITLE=Krita
+ENV TITLE=Krita 
 
 RUN \
   echo "**** add icon ****" && \
   curl -o \
-    /kclient/public/icon.png \
+    /usr/share/selkies/www/icon.png \
     https://raw.githubusercontent.com/linuxserver/docker-templates/master/linuxserver.io/img/krita-logo.png && \
   echo "**** install packages ****" && \
-  if [ -z ${KRITA_VERSION+x} ]; then \
-    KRITA_VERSION=$(curl -sL "http://dl-cdn.alpinelinux.org/alpine/v3.21/community/x86_64/APKINDEX.tar.gz" | tar -xz -C /tmp \
-    && awk '/^P:krita$/,/V:/' /tmp/APKINDEX | sed -n 2p | sed 's/^V://'); \
-  fi && \
-  apk add --no-cache \
-    krita==${KRITA_VERSION} && \
+  DOWNLOAD_URL=$(curl -sL https://download.kde.org/stable/krita/updates/Krita-Stable-x86_64.appimage.zsync \
+    | awk '/URL: https/ {print $2}') && \
+  curl -o \
+    /tmp/krita.app -L \
+    "${DOWNLOAD_URL}" && \
+  cd /tmp && \
+  chmod +x krita.app && \
+  ./krita.app --appimage-extract && \
+  mv \
+    squashfs-root \
+    /opt/krita && \
+  ln -s \
+    /opt/krita/AppRun \
+    /usr/bin/krita && \
   echo "**** cleanup ****" && \
   rm -rf \
     /tmp/*
